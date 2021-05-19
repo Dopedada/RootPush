@@ -1,0 +1,3 @@
+include ':pushnotice'
+include ':app'
+rootProject.name = "RootPush"
