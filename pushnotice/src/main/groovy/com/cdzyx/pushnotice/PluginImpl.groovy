@@ -73,9 +73,7 @@ class PluginImpl implements Plugin<Project> {
                                 "\n" +
                                 "* ${info.changeLog}\n" +
                                 "* v${project.android.defaultConfig.versionName}\n" +
-                                "* ${info.apiEnvironmentText}\n" +
                                 "* ${info.appTestVersionCodeText}\n" +
-                                "* ${info.canProxyText}\n" +
                                 "\n" +
                                 "[直接下载]($downloadUrl)\n" +
                                 "\n" +
