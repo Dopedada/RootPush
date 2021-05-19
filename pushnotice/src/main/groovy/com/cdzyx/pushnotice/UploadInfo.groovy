@@ -8,9 +8,16 @@ class UploadInfo {
     String appTestVersionCodeText
     String canProxyText
     String needAtPeopleMobiles
+    String apiToken
+    String packageName
+    String robotToken
+    String appName
+    String appIconPath
+    String firAppName
+
 
     @Override
-    public String toString() {
+    String toString() {
         return "UploadInfo{" +
                 "needUpload=" + needUpload +
                 ", changeLog='" + changeLog + '\'' +
@@ -18,6 +25,12 @@ class UploadInfo {
                 ", appTestVersionCodeText='" + appTestVersionCodeText + '\'' +
                 ", canProxyText='" + canProxyText + '\'' +
                 ", needAtPeopleMobiles='" + needAtPeopleMobiles + '\'' +
-                '}';
+                ", apiToken='" + apiToken + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", robotToken='" + robotToken + '\'' +
+                ", appName='" + appName + '\'' +
+                ", appIconPath='" + appIconPath + '\'' +
+                ", firAppName='" + firAppName + '\'' +
+                '}'
     }
 }

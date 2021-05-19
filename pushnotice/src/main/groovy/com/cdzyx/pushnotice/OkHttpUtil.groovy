@@ -9,9 +9,6 @@ import java.util.concurrent.TimeUnit
 class OkHttpUtil {
     private OkHttpClient okHttpClient
     private Gson gson
-    private static final String API_TOKEN = "293457325da4b6363ecec48593d45fc4"
-    private static final String PACKAGE_NAME = "com.cdzyx.firupload"//应用包名
-    private static final String DING_DING_ROBOT_TOKEN = "https://oapi.dingtalk.com/robot/send?access_token=82249f9cb272edcb47e8ac81a18a6e40db323175cfd24e61a7581c6e81bb8334"
 
     OkHttpUtil() {
         okHttpClient = new OkHttpClient.Builder()
@@ -23,10 +20,10 @@ class OkHttpUtil {
      * 获取fir的上传凭证
      * @return 上传凭证
      */
-    AppInFirInfo getCert() {
+    AppInFirInfo getCert(String packageName,String apiToken) {
         FormBody.Builder build = new FormBody.Builder()
-        build.add("bundle_id", PACKAGE_NAME)
-        build.add("api_token", API_TOKEN)
+        build.add("bundle_id", packageName)
+        build.add("api_token", apiToken)
         build.add("type", "android")
         Request request = new Request.Builder().url("http://api.bq04.com/apps").post(build.build()).build()
         Response response = okHttpClient.newCall(request).execute()
@@ -66,20 +63,20 @@ class OkHttpUtil {
         return gson.fromJson(responseIcon.body.string(), UploadResultInfo.class)
     }
 
-    AppDownloadInfo getAppDownloadInfo() {
+    AppDownloadInfo getAppDownloadInfo(String packageName,String apiToken) {
         // 获取成功连接
         String queryurl =
-                "http://api.bq04.com/apps/latest/$PACKAGE_NAME?api_token=$API_TOKEN&type=android"
+                "http://api.bq04.com/apps/latest/$packageName?api_token=$apiToken&type=android"
         Request requestUrl = new Request.Builder().url(queryurl).get().build()
         Response responseUrl = okHttpClient.newCall(requestUrl).execute()
         String result = responseUrl.body.string()
         return gson.fromJson(result, AppDownloadInfo.class)
     }
 
-    String sendDingTalk(DingTalkBean bean) {
+    String sendDingTalk(DingTalkBean bean,String robotToken) {
         println("发送给钉钉消息:"+gson.toJson(bean))
         RequestBody markdownBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(bean))
-        Request mdDingTalk = new Request.Builder().url(DING_DING_ROBOT_TOKEN)
+        Request mdDingTalk = new Request.Builder().url("https://oapi.dingtalk.com/robot/send?access_token="+robotToken)
                 .post(markdownBody).build()
         Response responseLink = okHttpClient.newCall(mdDingTalk).execute()
         return responseLink.body.string()
