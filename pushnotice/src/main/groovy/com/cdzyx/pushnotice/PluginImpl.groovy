@@ -44,7 +44,8 @@ class PluginImpl implements Plugin<Project> {
                 project.android.defaultConfig.versionName,
                 project.android.defaultConfig.versionCode,
                 fileUploadCert.getUploadUrlAddress(),
-                info.changeLog
+                info.changeLog,
+                info.firAppName
         )
         println(ANSI_GREEN + "apk上传fir结果:$uploadFileResult" + ANSI_RESET)
         //上传logo

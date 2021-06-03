@@ -32,13 +32,13 @@ class OkHttpUtil {
     }
 
     //上传apk文件
-    String uploadApk(File apkFile, String uploadKey, String uploadToken, String appVersionName, Integer appVersionCode, String uploadUrl, String changeLog) {
+    String uploadApk(File apkFile, String uploadKey, String uploadToken, String appVersionName, Integer appVersionCode, String uploadUrl, String changeLog,String firAppName) {
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), apkFile)
         MultipartBody body = new MultipartBody.Builder()
                 .setType(MediaType.parse("multipart/form-data"))
                 .addFormDataPart("key", uploadKey)
                 .addFormDataPart("token", uploadToken)
-                .addFormDataPart("x:name", "firupload")
+                .addFormDataPart("x:name", firAppName)
                 .addFormDataPart("x:version", appVersionName)
                 .addFormDataPart("x:build", String.valueOf(appVersionCode))
                 .addFormDataPart("file", apkFile.name, fileBody)
