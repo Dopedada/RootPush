@@ -82,12 +82,12 @@ uploadInfo {
  ```
  在fir上创建的应用的包名
  ```
-  ![packageName.png]()
+  ![packageName.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/packageName.png)
  - firAppName
  ```
  在fir上创建的应用名称
  ```
-   ![firAppName.png]()
+   ![firAppName.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/firAppName.png)
 - appName
 ```
 app的应用名称
