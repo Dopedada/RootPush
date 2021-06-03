@@ -101,5 +101,7 @@ app的logo,在AndroidStudio内的地址，例如：appIconPath=project.projectDi
 在钉钉群聊里面找到机器人，查看机器人设置，找到WebHook地址，地址中的access_token即为robotToken
 ```
 
-
+3.最后在点击Tasks中的assembleReleaseFir就可以通知钉钉机器人了
+   ![palypackage.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/palypackage.png)
+   ![success.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/success.png)
 ### 注意:请在机器人设置的安全设置里添加关键词，这里是appName
