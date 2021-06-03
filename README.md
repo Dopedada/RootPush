@@ -85,7 +85,7 @@ uploadInfo {
   ![packageName.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/packageName.png)
  - firAppName
  ```
- 在fir上创建的应用名称
+ 在fir上创建的应用短连接绑定的域名
  ```
    ![firAppName.png](https://github.com/ZYX520YTT/RootPush/blob/main/picture/firAppName.png)
 - appName
