@@ -1,6 +1,5 @@
 package com.cdzyx.pushnotice
 
-import org.apache.tools.ant.types.selectors.FilenameSelector
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -33,13 +32,24 @@ class PluginImpl implements Plugin<Project> {
         }
         OkHttpUtil okHttpUtil = new OkHttpUtil()
         //获取上传凭证
-        AppInFirInfo apkInFirInfo = okHttpUtil.getCert(info.packageName,info.apiToken)
+        AppInFirInfo apkInFirInfo = okHttpUtil.getCert(info.packageName, info.apiToken)
         AppInFirInfo.Cert.Upload fileUploadCert = apkInFirInfo.cert.binary
         //上传APK文件
         println(ANSI_RED + "开始上传APK到fir..." + ANSI_RESET)
+        File[] uploadFile = new File("${project.buildDir}/outputs/upload").listFiles()
+        File apkFile
+        for (File file : uploadFile) {
+            if (file.name.endsWith("apk")) {
+                apkFile = file
+                break
+            }
+        }
+        if (apkFile == null) {
+            println(ANSI_GREEN + "apk文件不存在" + ANSI_RESET)
+        }
         //获取配置信息
         String uploadFileResult = okHttpUtil.uploadApk(
-                new File("${project.buildDir}/outputs/upload").listFiles()(new FilenameSelector("apk"))[0],
+                apkFile,
                 fileUploadCert.getUploadKey(),
                 fileUploadCert.getUploadToken(),
                 project.android.defaultConfig.versionName,
@@ -59,7 +69,7 @@ class PluginImpl implements Plugin<Project> {
                 iconUploadCert.getUploadUrlAddress())
         println(ANSI_GREEN + "上传Icon返回结果:$uploadIconResult" + ANSI_RESET)
         //获取apk的下载信息
-        String downloadUrl = okHttpUtil.getAppDownloadInfo(info.packageName,info.apiToken).downloadUrl
+        String downloadUrl = okHttpUtil.getAppDownloadInfo(info.packageName, info.apiToken).downloadUrl
         List<String> needAtPeopleMobiles = new ArrayList<>()
         needAtPeopleMobiles.addAll(info.needAtPeopleMobiles.split(","))
         StringBuilder atPeopleContent = new StringBuilder()
@@ -69,9 +79,9 @@ class PluginImpl implements Plugin<Project> {
         String sendDingDingResult = okHttpUtil.sendDingTalk(new DingTalkBean(
                 "markdown",
                 new DingTalkBean.MarkDownContent(
-                        info.appName+"新版本提示",
+                        info.appName + "新版本提示",
                         "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
-                                "### "+info.appName+"最新版已打包发布\n" +
+                                "### " + info.appName + "最新版已打包发布\n" +
                                 "\n" +
                                 "* ${info.changeLog}\n" +
                                 "* v${project.android.defaultConfig.versionName}\n" +
@@ -81,7 +91,7 @@ class PluginImpl implements Plugin<Project> {
                                 "\n" +
                                 "[查看下载二维码](https://api.pwmqr.com/qrcode/create/?url=$downloadUrl)\n" +
                                 "\n" +
-                                "[在Fir中查看](http://d.firim.top/"+info.firAppName+")\n" +
+                                "[在Fir中查看](http://d.firim.top/" + info.firAppName + ")\n" +
                                 getAtPeopleContent(atPeopleContent.toString()) +
                                 "\n"
                 ),
@@ -89,7 +99,7 @@ class PluginImpl implements Plugin<Project> {
                         needAtPeopleMobiles,
                         false
                 )
-        ),info.robotToken)
+        ), info.robotToken)
         println(ANSI_GREEN + "发送钉钉结果:$sendDingDingResult" + ANSI_RESET)
     }
 
