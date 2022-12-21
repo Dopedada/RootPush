@@ -1,5 +1,6 @@
 package com.cdzyx.pushnotice
 
+import org.apache.tools.ant.types.selectors.FilenameSelector
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -38,7 +39,7 @@ class PluginImpl implements Plugin<Project> {
         println(ANSI_RED + "开始上传APK到fir..." + ANSI_RESET)
         //获取配置信息
         String uploadFileResult = okHttpUtil.uploadApk(
-                new File("${project.buildDir}/outputs/upload").listFiles()[0],
+                new File("${project.buildDir}/outputs/upload").listFiles()(new FilenameSelector("apk"))[0],
                 fileUploadCert.getUploadKey(),
                 fileUploadCert.getUploadToken(),
                 project.android.defaultConfig.versionName,
