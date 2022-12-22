@@ -12,6 +12,8 @@ class UploadInfo {
     String appName
     String appIconPath
     String firAppName
+    String platform
+
 
     @Override
     String toString() {
@@ -26,6 +28,7 @@ class UploadInfo {
                 ", appName='" + appName + '\'' +
                 ", appIconPath='" + appIconPath + '\'' +
                 ", firAppName='" + firAppName + '\'' +
+                ", platform='" + platform + '\'' +
                 '}'
     }
 }

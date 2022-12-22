@@ -76,7 +76,7 @@ class PluginImpl implements Plugin<Project> {
         for (String phone : needAtPeopleMobiles) {
             atPeopleContent.append("@" + phone)
         }
-        String sendDingDingResult = okHttpUtil.sendDingTalk(new DingTalkBean(
+        String sendDingDingResult = okHttpUtil.sendMessageToTalk(new DingTalkBean(
                 "markdown",
                 new DingTalkBean.MarkDownContent(
                         info.appName + "新版本提示",
@@ -99,7 +99,7 @@ class PluginImpl implements Plugin<Project> {
                         needAtPeopleMobiles,
                         false
                 )
-        ), info.robotToken)
+        ), info.robotToken,info.platform)
         println(ANSI_GREEN + "发送钉钉结果:$sendDingDingResult" + ANSI_RESET)
     }
 
