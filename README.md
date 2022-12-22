@@ -15,7 +15,7 @@ allprojects {
 }
 
 dependencies {
-        classpath "com.github.ZYX520YTT:RootPush:1.0.4"
+        classpath "com.github.ZYX520YTT:RootPush:1.0.6"
 }
 ```
 #### 使用说明
