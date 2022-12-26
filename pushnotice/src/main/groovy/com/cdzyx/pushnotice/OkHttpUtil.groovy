@@ -76,17 +76,17 @@ class OkHttpUtil {
     String sendDingMessageToTalk(DingTalkBean bean, String robotToken) {
         println("发送给钉钉消息:" + gson.toJson(bean))
         String uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
-        return sendMessageToTalk(uploadUrl)
+        return sendMessageToTalk(uploadUrl, gson.toJson(bean))
     }
 
     String sendWeiXinMessageToTalk(WeiXinTalkBean bean, String robotToken) {
         println("发送给微信消息:" + gson.toJson(bean))
         String uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + robotToken
-        return sendMessageToTalk(uploadUrl)
+        return sendMessageToTalk(uploadUrl, gson.toJson(bean))
     }
 
-    String sendMessageToTalk(String uploadUrl) {
-        RequestBody markdownBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(bean))
+    String sendMessageToTalk(String uploadUrl, String json) {
+        RequestBody markdownBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         Request mdDingTalk = new Request.Builder().url(uploadUrl)
                 .post(markdownBody).build()
         Response responseLink = okHttpClient.newCall(mdDingTalk).execute()
