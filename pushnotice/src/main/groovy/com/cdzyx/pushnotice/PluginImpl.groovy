@@ -76,7 +76,7 @@ class PluginImpl implements Plugin<Project> {
         for (String phone : needAtPeopleMobiles) {
             atPeopleContent.append("@" + phone)
         }
-        String content = "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
+        String content = "![avatar](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
                 "### " + info.appName + "最新版已打包发布\n" +
                 "\n" +
                 "* ${info.changeLog}\n" +
