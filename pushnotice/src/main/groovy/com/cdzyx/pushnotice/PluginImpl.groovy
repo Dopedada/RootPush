@@ -76,8 +76,7 @@ class PluginImpl implements Plugin<Project> {
         for (String phone : needAtPeopleMobiles) {
             atPeopleContent.append("@" + phone)
         }
-        String content = "![avatar](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
-                "### " + info.appName + "最新版已打包发布\n" +
+        String content = "### " + info.appName + "最新版已打包发布\n" +
                 "\n" +
                 "* ${info.changeLog}\n" +
                 "* v${project.android.defaultConfig.versionName}\n" +
@@ -87,7 +86,7 @@ class PluginImpl implements Plugin<Project> {
                 "\n" +
                 "[查看下载二维码](https://api.pwmqr.com/qrcode/create/?url=$downloadUrl)\n" +
                 "\n" +
-                "[在Fir中查看](http://d.firim.top/" + info.firAppName + ")\n" +
+                "[在Fir中查看]( http://hey.scandown.com" + info.firAppName + ")\n" +
                 getAtPeopleContent(atPeopleContent.toString()) +
                 "\n"
         switch (info.platform) {
@@ -102,7 +101,7 @@ class PluginImpl implements Plugin<Project> {
             case "dingding":
                 String sendDingDingResult = okHttpUtil.sendDingMessageToTalk(new DingTalkBean(
                         "markdown",
-                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", content),
+                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" + content),
                         new DingTalkBean.AtPeople(needAtPeopleMobiles, false)
                 ), info.robotToken)
                 println(ANSI_GREEN + "发送到钉钉的结果:$sendDingDingResult" + ANSI_RESET)
@@ -110,7 +109,7 @@ class PluginImpl implements Plugin<Project> {
             default:
                 String sendDingDingResult = okHttpUtil.sendDingMessageToTalk(new DingTalkBean(
                         "markdown",
-                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", content),
+                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" + content),
                         new DingTalkBean.AtPeople(needAtPeopleMobiles, false)
                 ), info.robotToken)
                 println(ANSI_GREEN + "发送到钉钉的结果:$sendDingDingResult" + ANSI_RESET)
