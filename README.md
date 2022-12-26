@@ -15,7 +15,7 @@ allprojects {
 }
 
 dependencies {
-        classpath "com.github.ZYX520YTT:RootPush:1.0.6"
+        classpath "com.github.ZYX520YTT:RootPush:1.1.5"
 }
 ```
 #### 使用说明
@@ -49,6 +49,7 @@ uploadInfo {
     appIconPath="***"
     appName="***"
     firAppName="***"
+    platform="***"
 }
 
 ```
@@ -58,7 +59,11 @@ uploadInfo {
 ```
 是否需要上传到fir平台并通过机器人发送到群聊
 ```
- 
+- platform
+```
+需要上传的平台，填写"weixin"或者"dingding"，默认是"dingding"
+```
+
  - needAtPeopleMobiles 
  ```
  需要@的人的手机号严格以逗号分隔
