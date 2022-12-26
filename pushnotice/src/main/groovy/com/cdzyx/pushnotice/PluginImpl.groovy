@@ -86,7 +86,7 @@ class PluginImpl implements Plugin<Project> {
                 "\n" +
                 "[查看下载二维码](https://api.pwmqr.com/qrcode/create/?url=$downloadUrl)\n" +
                 "\n" +
-                "[在Fir中查看]( http://hey.scandown.com" + info.firAppName + ")\n" +
+                "[在Fir中查看]( http://hey.scandown.com/" + info.firAppName + ")\n" +
                 getAtPeopleContent(atPeopleContent.toString()) +
                 "\n"
         switch (info.platform) {
