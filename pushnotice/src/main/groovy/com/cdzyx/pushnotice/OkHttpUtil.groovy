@@ -73,22 +73,19 @@ class OkHttpUtil {
         return gson.fromJson(result, AppDownloadInfo.class)
     }
 
-    String sendMessageToTalk(DingTalkBean bean, String robotToken, String platform) {
-        String uploadUrl
-        switch (platform) {
-            case "dingding":
-                println("发送给钉钉消息:" + gson.toJson(bean))
-                uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
-                break
-            case "weixin":
-                println("发送给微信消息:" + gson.toJson(bean))
-                uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + robotToken
-                break
-            default:
-                println("发送给钉钉消息:" + gson.toJson(bean))
-                uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
-                break
-        }
+    String sendDingMessageToTalk(DingTalkBean bean, String robotToken) {
+        println("发送给钉钉消息:" + gson.toJson(bean))
+        String uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
+        return sendMessageToTalk(uploadUrl)
+    }
+
+    String sendWeiXinMessageToTalk(WeiXinTalkBean bean, String robotToken) {
+        println("发送给微信消息:" + gson.toJson(bean))
+        String uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + robotToken
+        return sendMessageToTalk(uploadUrl)
+    }
+
+    String sendMessageToTalk(String uploadUrl) {
         RequestBody markdownBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(bean))
         Request mdDingTalk = new Request.Builder().url(uploadUrl)
                 .post(markdownBody).build()

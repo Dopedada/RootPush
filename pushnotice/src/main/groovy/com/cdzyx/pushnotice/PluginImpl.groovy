@@ -76,31 +76,46 @@ class PluginImpl implements Plugin<Project> {
         for (String phone : needAtPeopleMobiles) {
             atPeopleContent.append("@" + phone)
         }
-        String sendDingDingResult = okHttpUtil.sendMessageToTalk(new DingTalkBean(
-                "markdown",
-                new DingTalkBean.MarkDownContent(
-                        info.appName + "新版本提示",
-                        "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
-                                "### " + info.appName + "最新版已打包发布\n" +
-                                "\n" +
-                                "* ${info.changeLog}\n" +
-                                "* v${project.android.defaultConfig.versionName}\n" +
-                                "* ${info.appTestVersionCodeText}\n" +
-                                "\n" +
-                                "[直接下载]($downloadUrl)\n" +
-                                "\n" +
-                                "[查看下载二维码](https://api.pwmqr.com/qrcode/create/?url=$downloadUrl)\n" +
-                                "\n" +
-                                "[在Fir中查看](http://d.firim.top/" + info.firAppName + ")\n" +
-                                getAtPeopleContent(atPeopleContent.toString()) +
-                                "\n"
-                ),
-                new DingTalkBean.AtPeople(
-                        needAtPeopleMobiles,
-                        false
-                )
-        ), info.robotToken,info.platform)
-        println(ANSI_GREEN + "发送钉钉结果:$sendDingDingResult" + ANSI_RESET)
+        String content = "![screenshot](${uploadIconResult.getUrl.substring(0, uploadIconResult.getUrl.indexOf("?"))})\n" +
+                "### " + info.appName + "最新版已打包发布\n" +
+                "\n" +
+                "* ${info.changeLog}\n" +
+                "* v${project.android.defaultConfig.versionName}\n" +
+                "* ${info.appTestVersionCodeText}\n" +
+                "\n" +
+                "[直接下载]($downloadUrl)\n" +
+                "\n" +
+                "[查看下载二维码](https://api.pwmqr.com/qrcode/create/?url=$downloadUrl)\n" +
+                "\n" +
+                "[在Fir中查看](http://d.firim.top/" + info.firAppName + ")\n" +
+                getAtPeopleContent(atPeopleContent.toString()) +
+                "\n"
+        switch (info.platform) {
+            case "weixin":
+                String sendWexinResult = okHttpUtil.sendWeiXinMessageToTalk(new WeiXinTalkBean(
+                        "markdown",
+                        new WeiXinTalkBean.MarkDownContent(content),
+                        new WeiXinTalkBean.AtPeople(needAtPeopleMobiles, false)
+                ), info.robotToken)
+                println(ANSI_GREEN + "发送到微信的结果:$sendWexinResult" + ANSI_RESET)
+                break
+            case "dingding":
+                String sendDingDingResult = okHttpUtil.sendDingMessageToTalk(new DingTalkBean(
+                        "markdown",
+                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", content),
+                        new DingTalkBean.AtPeople(needAtPeopleMobiles, false)
+                ), info.robotToken)
+                println(ANSI_GREEN + "发送到钉钉的结果:$sendDingDingResult" + ANSI_RESET)
+                break
+            default:
+                String sendDingDingResult = okHttpUtil.sendDingMessageToTalk(new DingTalkBean(
+                        "markdown",
+                        new DingTalkBean.MarkDownContent(info.appName + "新版本提示", content),
+                        new DingTalkBean.AtPeople(needAtPeopleMobiles, false)
+                ), info.robotToken)
+                println(ANSI_GREEN + "发送到钉钉的结果:$sendDingDingResult" + ANSI_RESET)
+                break
+        }
     }
 
     private static String getAtPeopleContent(String atPeopleContent) {
