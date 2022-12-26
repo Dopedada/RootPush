@@ -76,18 +76,18 @@ class OkHttpUtil {
     String sendMessageToTalk(DingTalkBean bean, String robotToken, String platform) {
         String uploadUrl
         switch (platform) {
-            case "dingding" -> {
+            case "dingding":
                 println("发送给钉钉消息:" + gson.toJson(bean))
                 uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
-            }
-            case "weixin" -> {
+                break
+            case "weixin":
                 println("发送给微信消息:" + gson.toJson(bean))
                 uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + robotToken
-            }
-            default -> {
+                break
+            default:
                 println("发送给钉钉消息:" + gson.toJson(bean))
                 uploadUrl = "https://oapi.dingtalk.com/robot/send?access_token=" + robotToken
-            }
+                break
         }
         RequestBody markdownBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(bean))
         Request mdDingTalk = new Request.Builder().url(uploadUrl)
