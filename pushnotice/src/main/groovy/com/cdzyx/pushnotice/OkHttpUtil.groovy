@@ -25,7 +25,7 @@ class OkHttpUtil {
         build.add("bundle_id", packageName)
         build.add("api_token", apiToken)
         build.add("type", "android")
-        Request request = new Request.Builder().url("http://api.bq04.com/apps").post(build.build()).build()
+        Request request = new Request.Builder().url("http://api.appmeta.cn/apps").post(build.build()).build()
         Response response = okHttpClient.newCall(request).execute()
         String result = response.body.string()
         return gson.fromJson(result, AppInFirInfo.class)
@@ -66,7 +66,7 @@ class OkHttpUtil {
     AppDownloadInfo getAppDownloadInfo(String packageName, String apiToken) {
         // 获取成功连接
         String queryurl =
-                "http://api.bq04.com/apps/latest/$packageName?api_token=$apiToken&type=android"
+                "http://api.appmeta.cn/apps/latest/$packageName?api_token=$apiToken&type=android"
         Request requestUrl = new Request.Builder().url(queryurl).get().build()
         Response responseUrl = okHttpClient.newCall(requestUrl).execute()
         String result = responseUrl.body.string()
